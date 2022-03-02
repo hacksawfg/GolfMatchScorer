@@ -1,23 +1,20 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GolfMatchScore.Server.Models
+namespace GolfMatchScore.Shared.Models.Course
 {
-    public class Course
+    public class CourseEdit
     {
-        [Key]
         public int CourseId { get; set; }
-        [Required]
-        public string OwnerId { get; set; }
-        [Required]
         public string CourseName { get; set; }
         public string CourseCity { get; set; }
         public string CourseState { get; set; }
         public int CourseSlope { get; set; }
         public double CourseDifficultyRating { get; set; }
-        [Required]
         public int CoursePar { get; set; }
         public int CourseLength { get; set; }
-        public virtual ICollection<GolfRound> Rounds { get; set; } = new List<GolfRound>();
     }
 }
