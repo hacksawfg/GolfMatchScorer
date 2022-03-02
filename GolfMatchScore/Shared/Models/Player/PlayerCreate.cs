@@ -13,5 +13,7 @@ namespace GolfMatchScore.Shared.Models.Player
         public string PlayerFirstName { get; set; }
         [Required]
         public string PlayerLastName { get; set; }
+        // foreign key
+        public int TeamId { get; set; }
     }
 }

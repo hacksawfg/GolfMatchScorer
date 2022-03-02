@@ -16,8 +16,8 @@ namespace GolfMatchScore.Shared.Models.GolfRound
 
         // Foreign Keys
         public int CourseId { get; set; }
-        public CourseListItem Course { get; set; }
+        public virtual CourseListItem Course { get; set; }
         public int PlayerId { get; set; }
-        public PlayerListItem Player { get; set; }
+        public virtual PlayerListItem Player { get; set; }
     }
 }

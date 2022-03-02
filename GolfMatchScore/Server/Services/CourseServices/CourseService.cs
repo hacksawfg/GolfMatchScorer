@@ -20,7 +20,6 @@ namespace GolfMatchScore.Server.Services.CourseServices
             _context = context;
         }
 
-
         public async Task<bool> CreateCourseAsync(CourseCreate model)
         {
             var courseEntity = new Course

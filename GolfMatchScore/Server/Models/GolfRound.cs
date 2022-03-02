@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GolfMatchScore.Shared.Models.Player;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,5 +22,6 @@ namespace GolfMatchScore.Server.Models
         [ForeignKey(nameof(Player))]
         public int PlayerId { get; set; }
         public virtual Player Player { get; set; }
+
     }
 }

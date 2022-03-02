@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\RoundServices\" />
-    <Folder Include="Services\PlayerServices\" />
     <Folder Include="Services\TeamServices\" />
   </ItemGroup>
 

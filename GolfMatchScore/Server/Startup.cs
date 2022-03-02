@@ -1,5 +1,9 @@
 using GolfMatchScore.Server.Data;
 using GolfMatchScore.Server.Models;
+using GolfMatchScore.Server.Services.CourseServices;
+using GolfMatchScore.Server.Services.PlayerServices;
+using GolfMatchScore.Server.Services.RoundServices;
+using GolfMatchScore.Server.Services.TeamServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +44,11 @@ namespace GolfMatchScore.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IRoundService, RoundService>();
+            services.AddScoped<ITeamService, TeamService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
