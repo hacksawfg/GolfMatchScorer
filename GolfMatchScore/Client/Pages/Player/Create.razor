@@ -1,0 +1,69 @@
+﻿@page "/player/create"
+@using GolfMatchScore.Shared.Models.Player
+@using GolfMatchScore.Shared.Models.Team
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navigation
+
+<h3>Add a player</h3>
+
+@if (errorMessage != null)
+{
+    <h5 class="text-danger">@errorMessage</h5>
+}
+
+<div class="container">
+    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label>Player's First Name</label>
+            <InputText class="form-control" @bind-Value="model.PlayerFirstName" />
+            <label>Player's Last Name</label>
+            <InputText class="form-control" @bind-Value="model.PlayerLastName" />
+            <label>School</label>
+            <InputSelect class="form-control" @bind-Value="model.TeamId">
+                @if (teams == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <option value="0">Select School</option>
+                    @foreach (var team in teams)
+                    {
+                        <option value="@team.TeamId">@team.TeamSchool</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+    </EditForm>
+</div>
+
+@code {
+    private PlayerCreate model = new();
+    private IEnumerable<TeamListItem> teams;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teams = await http.GetFromJsonAsync<IEnumerable<TeamListItem>>("/api/team/");
+    }
+
+    private async void HandleSubmit()
+    {
+        var createPlayer = await http.PostAsJsonAsync<PlayerCreate>("/api/player", model);
+
+        if (createPlayer.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/player");
+        }
+        else
+        {
+            errorMessage = "Could not add a player right now.  Please try again later.";
+        }
+    }
+}
+

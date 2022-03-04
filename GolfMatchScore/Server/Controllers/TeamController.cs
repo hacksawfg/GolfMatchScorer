@@ -58,7 +58,7 @@ namespace GolfMatchScore.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create (TeamCreate model)
+        public async Task<IActionResult> Create(TeamCreate model)
         {
             if (!ModelState.IsValid || model is null)
                 return BadRequest();
@@ -93,7 +93,21 @@ namespace GolfMatchScore.Server.Controllers
 
         }
 
+        [HttpDelete("delete/{teamId}")]
+        public async Task<IActionResult> Delete(int teamId)
+        {
+            if (!SetUserIdInService())
+                return Unauthorized();
 
+            var selectTeam = await _teamService.GetTeamDetailByIdAsync(teamId);
+            if (selectTeam == null)
+                return NotFound();
+
+            bool deleteTeam = await _teamService.DeleteTeamByIdAsync(teamId);
+            if (deleteTeam)
+                return Ok();
+            return BadRequest();
+        }
 
     }
 }

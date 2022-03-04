@@ -29,7 +29,8 @@ namespace GolfMatchScore.Server.Services.PlayerServices
             {
                 OwnerId = _userId,
                 PlayerFirstName = model.PlayerFirstName,
-                PlayerLastName = model.PlayerLastName
+                PlayerLastName = model.PlayerLastName,
+                TeamId = model.TeamId
             };
 
             _context.Players.Add(playerEntity);

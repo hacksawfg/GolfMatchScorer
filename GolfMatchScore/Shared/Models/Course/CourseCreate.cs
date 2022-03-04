@@ -12,6 +12,8 @@ namespace GolfMatchScore.Shared.Models.Course
         [Required]
         public string CourseName { get; set; }
         public string CourseCity { get; set; }
+
+        [MaxLength(2,ErrorMessage = "Please enter a two letter state/province abbreviation")]
         public string CourseState { get; set; }
         public int CourseSlope { get; set; }
         public double CourseDifficultyRating { get; set; }

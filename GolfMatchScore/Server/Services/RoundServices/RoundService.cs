@@ -61,19 +61,23 @@ namespace GolfMatchScore.Server.Services.RoundServices
                 RoundId = roundQuery.RoundId,
                 MatchDate = roundQuery.MatchDate,
                 MatchScore = roundQuery.MatchScore,
-                Player = new PlayerListItem
+                Player = new PlayerDetails
                 {
                     PlayerId = roundQuery.Player.PlayerId,
                     PlayerFirstName = roundQuery.Player.PlayerFirstName,
                     PlayerLastName = roundQuery.Player.PlayerLastName,
                     Team = new TeamListItem
                     {
+                        TeamId = roundQuery.Player.Team.TeamId,
                         TeamSchool = roundQuery.Player.Team.TeamSchool
                     }
                 },
-                Course = new Shared.Models.Course.CourseListItem
+                Course = new Shared.Models.Course.CourseDetail
                 {
-                    CourseName = roundQuery.Course.CourseName
+                    CourseId = roundQuery.Course.CourseId,
+                    CourseName = roundQuery.Course.CourseName,
+                    CourseCity = roundQuery.Course.CourseCity,
+                    CourseState = roundQuery.Course.CourseState
                 }
             };
         }

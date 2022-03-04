@@ -17,7 +17,7 @@ namespace GolfMatchScore.Shared.Models.Course
         public double CourseDifficultyRating { get; set; }
         public int CoursePar { get; set; }
         public int CourseLength { get; set; }
-        public int RoundId { get; set; }
+        //public int RoundId { get; set; }
         public virtual ICollection<RoundListItem> Rounds { get; set; }
     }
 }
