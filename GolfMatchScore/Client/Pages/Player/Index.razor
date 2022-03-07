@@ -19,6 +19,7 @@ else
                 <th>Id</th>
                 <th>Player Name</th>
                 <th>School</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,11 @@ else
                     <td>@player.PlayerId</td>
                     <td>@player.PlayerFirstName @player.PlayerLastName</td>
                     <td>@player.Team.TeamSchool</td>
+                    <td>
+                        <a href=@($"player/{player.PlayerId}")>Details</a> |
+                        <a href=@($"player/edit/{player.PlayerId}")>Edit</a> |
+                        <a href=@($"player/delete/{player.PlayerId}")>Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>

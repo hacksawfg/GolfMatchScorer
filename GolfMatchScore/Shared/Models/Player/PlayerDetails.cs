@@ -18,6 +18,7 @@ namespace GolfMatchScore.Shared.Models.Player
         [ForeignKey(nameof(Team))]
         public int TeamId { get; set; }
         public virtual TeamListItem Team { get; set; }
-        public virtual ICollection<RoundListItem> Rounds { get; set; } = new List<RoundListItem>();
+        public virtual ICollection<RoundDetails> Rounds { get; set; } = new List<RoundDetails>();
+        public double PlayerAverageScore { get; set; }
     }
 }

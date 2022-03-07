@@ -116,8 +116,6 @@ namespace GolfMatchScore.Server.Services.RoundServices
 
             entity.MatchDate = model.MatchDate;
             entity.MatchScore = model.MatchScore;
-            entity.PlayerId = model.PlayerId;
-            entity.CourseId = model.CourseId;
 
             return await _context.SaveChangesAsync() == 1;
             

@@ -45,7 +45,7 @@ namespace GolfMatchScore.Server.Controllers
             return Ok(players.ToList());
         }
 
-        [HttpGet("index/{playerId}")]
+        [HttpGet("{playerId}")]
         public async Task<IActionResult> Player(int playerId)
         {
             var player = await _playerService.GetPlayerDetailsByIdAsync(playerId);

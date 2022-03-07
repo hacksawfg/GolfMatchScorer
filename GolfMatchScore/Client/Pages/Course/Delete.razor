@@ -1,0 +1,61 @@
+﻿@page "/course/delete/{courseId:int}"
+@using GolfMatchScore.Shared.Models.Course
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navigation
+
+
+@if (message != null)
+{
+    <h2 class="text-danger">@message</h2>
+}
+
+@if (course != null)
+{
+<h3>Delete Course @course.CourseName</h3>
+    <div class="container">
+        <div class="card-header d-flex justify-content-between">
+            <span>Course Id# @course.CourseId</span>
+            <span>Course Name: @course.CourseName</span>
+        </div>
+        <div class="card-body">
+            <p>Course Location: @course.CourseCity, @course.CourseState</p>
+            <p>Par: @course.CoursePar</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <div class="text-center justify-content between w-50">
+            <a href=@($"/course/{courseId}") class="btn btn-outline-primary">Back to Course</a>
+            <a href=# @onclick="HandleClick" class="btn btn-danger text-white">Delete Course</a>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code {
+    [Parameter]
+    public int courseId { get; set; }
+    public CourseDetail course { get; set; }
+    public string message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await http.GetFromJsonAsync<CourseDetail>($"/api/course/{courseId}");
+    }
+
+    private async void HandleClick()
+    {
+        var deleteCourse = await http.DeleteAsync($"/api/course/delete/{courseId}");
+        if (deleteCourse.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/course");
+        }
+        else
+        {
+            message = "Failed to remove course";
+        }
+    }
+}
