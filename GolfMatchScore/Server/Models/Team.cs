@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GolfMatchScore.Server.Models
 {
@@ -6,12 +7,14 @@ namespace GolfMatchScore.Server.Models
     {
         [Key]
         public int TeamId { get; set; }
+        public string OwnerId { get; set; }
         [Required]
         public string TeamSchool { get; set; }
         [Required]
         public string TeamCoachFirstName { get; set; }
         [Required]
         public string TeamCoachLastName { get; set; }
+        public virtual ICollection<Player> Players { get; set; } = new List<Player>();
 
     }
 }

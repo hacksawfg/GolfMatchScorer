@@ -1,0 +1,56 @@
+﻿@page "/player/{playerId:int}"
+@using GolfMatchScore.Shared.Models.Course
+@using GolfMatchScore.Shared.Models.Player
+@using GolfMatchScore.Shared.Models.Team
+@using GolfMatchScore.Shared.Models.GolfRound
+@attribute [Authorize]
+@inject HttpClient http
+
+
+@if (player == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <h3>Player Details for @player.PlayerFirstName @player.PlayerLastName</h3>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <span>@player.PlayerFirstName @player.PlayerLastName</span>
+            </div>
+            <div class="card-body">
+                <p class="card-text">School: @player.Team.TeamSchool</p>
+                <p class="card-text">Round History</p>
+                @foreach (var round in @player.Rounds)
+                {
+                    <p class="card-text">Date: @round.MatchDate.ToShortDateString()  Score: @round.MatchScore  Course: @round.Course.CourseName</p>
+                }
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <span class="text-center">Average Score: @player.PlayerAverageScore</span>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <div class="text-center justify-content-between w-25">
+                    <a href=@($"/player/edit/{playerId}") class="btn btn-outline-primary">Edit</a>
+                    <a href=@($"/player/delete/{playerId}") class="btn btn-outline-danger">Delete</a>
+                    <hr />
+                    <a href="/player">Back to Player Index</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int playerId { get; set; }
+    public PlayerDetails player { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        player = await http.GetFromJsonAsync<PlayerDetails>($"/api/player/{playerId}");
+    }
+}
