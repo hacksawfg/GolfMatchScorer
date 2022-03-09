@@ -5,9 +5,6 @@
 @inject HttpClient http
 @attribute [Authorize]
 
-<h3>List of Rounds</h3>
-
-<a href="/round/create/">Create a Round</a>
 
 @if (rounds == null)
 {
@@ -15,33 +12,35 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Match Date</th>
-                <th>Course</th>
-                <th>Player</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (RoundListItem round in rounds)
-            {
+    <div class="card mx-auto p-4 w-75">
+        <h3 class="card-title">List of Rounds</h3>
+        <a href="/round/create/">Create a Round</a>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@round.RoundId</td>
-                    <td>@round.MatchDate.ToShortDateString()</td>
-                    <td value="@round.CourseId">@round.Course.CourseName</td>
-                    <td value="@round.PlayerId">@round.Player.PlayerFirstName @round.Player.PlayerLastName</td>
-                    <td>
-                        <a href=@($"round/{round.RoundId}")>Details</a> |
-                        <a href=@($"round/edit/{round.RoundId}")>Edit</a> |
-                        <a href=@($"round/delete/{round.RoundId}")>Delete</a>
-                    </td>
+                    <th>Match Date</th>
+                    <th>Course</th>
+                    <th>Player</th>
+                    <th>Options</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (RoundListItem round in rounds)
+                {
+                    <tr>
+                        <td>@round.MatchDate.ToShortDateString()</td>
+                        <td value="@round.CourseId">@round.Course.CourseName</td>
+                        <td value="@round.PlayerId">@round.Player.PlayerFirstName @round.Player.PlayerLastName</td>
+                        <td>
+                            <a href=@($"round/{round.RoundId}")>Details</a> |
+                            <a href=@($"round/edit/{round.RoundId}")>Edit</a> |
+                            <a href=@($"round/delete/{round.RoundId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 

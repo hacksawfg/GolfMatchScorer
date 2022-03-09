@@ -14,21 +14,23 @@
 }
 else
 {
-<div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="container">
+        <div class="card mx-auto w-50 p-4">
+            <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <div class="form-group">
-            <h3 value="@model.RoundId">Edit Round for @model.Player.PlayerFirstName @model.Player.PlayerLastName</h3>
-            <label>Round Date</label>
-            <InputDate class="form-control" @bind-Value="model.MatchDate" />
-            <label>Score for Round</label>
-            <InputNumber class="form-control" @bind-Value="model.MatchScore" />
+                <div class="form-group">
+                    <h3 value="@model.RoundId">Edit Round for @model.Player.PlayerFirstName @model.Player.PlayerLastName</h3>
+                    <label>Round Date</label>
+                    <InputDate class="form-control" @bind-Value="model.MatchDate" />
+                    <label>Score for Round</label>
+                    <InputNumber class="form-control" @bind-Value="model.MatchScore" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+            </EditForm>
         </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
-</div>
+    </div>
 }
 
 @code {

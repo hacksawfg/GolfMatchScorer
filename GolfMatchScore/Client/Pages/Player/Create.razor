@@ -5,7 +5,6 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
-<h3>Add a player</h3>
 
 @if (errorMessage != null)
 {
@@ -13,33 +12,37 @@
 }
 
 <div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="card w-75 p-4 mx-auto">
+        <h3 class="card-title">Add a player</h3>
 
-        <div class="form-group">
-            <label>Player's First Name</label>
-            <InputText class="form-control" @bind-Value="model.PlayerFirstName" />
-            <label>Player's Last Name</label>
-            <InputText class="form-control" @bind-Value="model.PlayerLastName" />
-            <label>School</label>
-            <InputSelect class="form-control" @bind-Value="model.TeamId">
-                @if (teams == null)
-                {
-                    <p><em>Loading...</em></p>
-                }
-                else
-                {
-                    <option value="0">Select School</option>
-                    @foreach (var team in teams)
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Player's First Name</label>
+                <InputText class="form-control" @bind-Value="model.PlayerFirstName" />
+                <label>Player's Last Name</label>
+                <InputText class="form-control" @bind-Value="model.PlayerLastName" />
+                <label>School</label>
+                <InputSelect class="form-control" @bind-Value="model.TeamId">
+                    @if (teams == null)
                     {
-                        <option value="@team.TeamId">@team.TeamSchool</option>
+                        <p><em>Loading...</em></p>
                     }
-                }
-            </InputSelect>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
+                    else
+                    {
+                        <option value="0">Select School</option>
+                        @foreach (var team in teams)
+                        {
+                            <option value="@team.TeamId">@team.TeamSchool</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
 </div>
 
 @code {

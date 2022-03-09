@@ -3,9 +3,7 @@
 @inject HttpClient http
 @attribute [Authorize]
 
-<h3>List of Courses</h3>
 
-<a href="/course/create/">Create a Course</a>
 
 @if (courses == null)
 {
@@ -13,30 +11,33 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Course Name</th>
-                <th>Location</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (CourseListItem course in courses)
-            {
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">List of Courses</h3>
+        <a href="/course/create/">Create a Course</a>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@course.CourseId</td>
-                    <td>@course.CourseName</td>
-                    <td>@course.CourseCity, @course.CourseState</td>
-                    <td><a href=@($"course/{course.CourseId}")>Details</a> |
-                        <a href=@($"course/edit/{course.CourseId}")>Edit</a> |
-                        <a href=@($"course/delete/{course.CourseId}")>Delete</a>
-                    </td>
+                    <th>Course Name</th>
+                    <th>Location</th>
+                    <th>Options</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (CourseListItem course in courses)
+                {
+                    <tr>
+                        <td>@course.CourseName</td>
+                        <td>@course.CourseCity, @course.CourseState</td>
+                        <td>
+                            <a href=@($"course/{course.CourseId}")>Details</a> |
+                            <a href=@($"course/edit/{course.CourseId}")>Edit</a> |
+                            <a href=@($"course/delete/{course.CourseId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 

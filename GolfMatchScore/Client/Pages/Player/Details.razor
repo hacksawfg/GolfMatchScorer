@@ -13,21 +13,20 @@
 }
 else
 {
-
-    <h3>Player Details for @player.PlayerFirstName @player.PlayerLastName</h3>
-
     <div class="container">
-        <div class="card">
+        <div class="card w-75 mx-auto">
             <div class="card-header d-flex justify-content-between">
-                <span>@player.PlayerFirstName @player.PlayerLastName</span>
+                <h3>Player Details for @player.PlayerFirstName @player.PlayerLastName</h3>
             </div>
             <div class="card-body">
-                <p class="card-text">School: @player.Team.TeamSchool</p>
+                <p class="card-text">School: <a href=@($"/team/{player.Team.TeamId}")>@player.Team.TeamSchool</a></p>
                 <p class="card-text">Round History</p>
-                @foreach (var round in @player.Rounds)
-                {
-                    <p class="card-text">Date: @round.MatchDate.ToShortDateString()  Score: @round.MatchScore  Course: @round.Course.CourseName</p>
-                }
+                <ul class="list-group list-group-flush">
+                    @foreach (var round in @player.Rounds)
+                    {
+                        <li class="list-group-item">Date: <a href=@($"/round/{round.RoundId}")>@round.MatchDate.ToShortDateString()</a> Score: <a href=@($"/round/{round.RoundId}")>@round.MatchScore</a>  Course: <a href=@($"/round/{round.Course.CourseId}")>@round.Course.CourseName</a></li>
+                    }
+                </ul>
             </div>
             <div class="card-footer text-muted d-flex justify-content-between">
                 <span class="text-center">Average Score: @player.PlayerAverageScore</span>

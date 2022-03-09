@@ -12,21 +12,23 @@
 
 @if (course != null)
 {
-<h3>Delete Course @course.CourseName</h3>
-    <div class="container">
-        <div class="card-header d-flex justify-content-between">
-            <span>Course Id# @course.CourseId</span>
-            <span>Course Name: @course.CourseName</span>
+    <div class="card w-75 mx-auto p-4">
+        <h3 class="card-title">Delete Course @course.CourseName?</h3>
+        <div class="container">
+            <div class="card-header d-flex justify-content-between">
+                <span>Course Id# @course.CourseId</span>
+                <span>Course Name: @course.CourseName</span>
+            </div>
+            <div class="card-body">
+                <p>Course Location: @course.CourseCity, @course.CourseState</p>
+                <p>Par: @course.CoursePar</p>
+            </div>
         </div>
-        <div class="card-body">
-            <p>Course Location: @course.CourseCity, @course.CourseState</p>
-            <p>Par: @course.CoursePar</p>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center mt-3">
-        <div class="text-center justify-content between w-50">
-            <a href=@($"/course/{courseId}") class="btn btn-outline-primary">Back to Course</a>
-            <a href=# @onclick="HandleClick" class="btn btn-danger text-white">Delete Course</a>
+        <div class="d-flex justify-content-center mt-3">
+            <div class="text-center justify-content between w-50">
+                <a href=@($"/course/{courseId}") class="btn btn-outline-primary">Back to Course</a>
+                <a href=# @onclick="HandleClick" class="btn btn-danger text-white">Delete Course</a>
+            </div>
         </div>
     </div>
 }

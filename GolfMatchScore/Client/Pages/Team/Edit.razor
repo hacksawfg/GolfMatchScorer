@@ -3,8 +3,6 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
-<h3>Edit Team</h3>
-
 @if (errorMessage != null)
 {
     <h5 class="text-danger">@errorMessage</h5>
@@ -16,22 +14,27 @@
 }
 else
 {
-<div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="container">
+        <div class="card w-75 mx-auto p-4">
 
-        <div class="form-group">
-            <label>Team Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamSchool" />
-            <label>Coach's First Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamCoachFirstName" />
-            <label>Coach's Last Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamCoachLastName" />
+            <h3 class="card-title">Edit Team</h3>
+
+            <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label>Team Name</label>
+                    <InputText class="form-control" @bind-Value="model.TeamSchool" />
+                    <label>Coach's First Name</label>
+                    <InputText class="form-control" @bind-Value="model.TeamCoachFirstName" />
+                    <label>Coach's Last Name</label>
+                    <InputText class="form-control" @bind-Value="model.TeamCoachLastName" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+            </EditForm>
         </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
-</div>
+    </div>
 }
 
 @code {

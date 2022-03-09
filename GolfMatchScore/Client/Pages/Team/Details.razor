@@ -11,24 +11,23 @@
 }
 else
 {
-    <h3>@team.TeamSchool</h3>
-    <h4>Team Information</h4>
-
     <div class="container">
-        <div class="card">
+        <div class="card w-50 mx-auto">
             <div class="card-header d-flex justify-content-between">
-                <span>@team.TeamSchool</span>
+                <h3>@team.TeamSchool</h3>
             </div>
             <div class="card-body">
                 <p class="card-text">Coach: @team.TeamCoachFirstName @team.TeamCoachLastName</p>
                 <p class="card-text">Player List</p>
+                <ul class="list-group list-group-flush">
                 @foreach (var player in @team.Players)
                 {
-                    <p class="card-text">@player.PlayerFirstName @player.PlayerLastName</p>
+                    <li class="list-group-item"><a href=@($"/player/{player.PlayerId}")>@player.PlayerFirstName @player.PlayerLastName</a></li>
                 }
+                </ul>
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <div class="text-center justify-content-between w-25">
+                <div class="text-center justify-content-between">
                     <a href=@($"/team/edit/{teamId}") class="btn btn-outline-primary">Edit</a>
                     <a href=@($"/team/delete/{teamId}") class="btn btn-outline-danger">Delete</a>
                     <hr />

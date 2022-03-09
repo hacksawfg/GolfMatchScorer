@@ -10,7 +10,7 @@ namespace GolfMatchScore.Shared.Models.GolfRound
     public class RoundCreate
     {
         [Required]
-        public DateTime MatchDate { get; set; }
+        public DateTime MatchDate { get; set; } = DateTime.Now;
         public int MatchScore { get; set; }
 
         // Foreign Keys
