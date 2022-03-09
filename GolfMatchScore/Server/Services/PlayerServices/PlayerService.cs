@@ -67,18 +67,19 @@ namespace GolfMatchScore.Server.Services.PlayerServices
                     TeamId = playerQuery.Team.TeamId,
                     TeamSchool = playerQuery.Team.TeamSchool
                 },
-                Rounds = playerQuery.Rounds.Select(r => new RoundDetails
+                Rounds = playerQuery.Rounds.Count == 0 ? null : playerQuery.Rounds.Select(r => new RoundDetails
                 {
                     RoundId = r.RoundId,
                     MatchDate = r.MatchDate,
                     MatchScore = r.MatchScore,
                     Course = new CourseDetail
                     {
+                        CourseId = r.CourseId,
                         CourseName = r.Course.CourseName
                     }
 
                 }).ToList(),
-                PlayerAverageScore = playerQuery.Rounds.Where(p => p.PlayerId == playerQuery.PlayerId).Average(p => p.MatchScore )
+                PlayerAverageScore = playerQuery.Rounds.Count == 0 ? 0 : playerQuery.Rounds.Where(p => p.PlayerId == playerQuery.PlayerId).Average(p => p.MatchScore )
             };
 
         }

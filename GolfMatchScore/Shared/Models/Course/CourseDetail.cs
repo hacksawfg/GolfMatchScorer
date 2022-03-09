@@ -19,5 +19,6 @@ namespace GolfMatchScore.Shared.Models.Course
         public int CourseLength { get; set; }
         //public int RoundId { get; set; }
         public virtual ICollection<RoundListItem> Rounds { get; set; }
+        public ICollection<string> MatchDates { get; set; }
     }
 }
