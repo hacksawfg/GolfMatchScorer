@@ -3,9 +3,6 @@
 @inject HttpClient http
 @attribute [Authorize]
 
-<h3>List of Teams</h3>
-
-<a href="/team/create">Create a New Team</a>
 
 @if (teams == null)
 {
@@ -13,29 +10,32 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Team Id</th>
-                <th>School</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (TeamListItem team in teams)
-            {
+    <div class="card mx-auto p-4 w-50">
+        <h3 class="card-title">List of Teams</h3>
+
+        <a href="/team/create">Create a New Team</a>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@team.TeamId</td>
-                    <td>@team.TeamSchool</td>
-                    <td>
-                        <a href=@($"team/{team.TeamId}")>Details</a> |
-                        <a href=@($"team/edit/{team.TeamId}")>Edit</a> |
-                        <a href=@($"team/delete/{team.TeamId}")>Delete</a>
-                    </td>
+                    <th>School</th>
+                    <th>Options</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (TeamListItem team in teams)
+                {
+                    <tr>
+                        <td>@team.TeamSchool</td>
+                        <td>
+                            <a href=@($"team/{team.TeamId}")>Details</a> |
+                            <a href=@($"team/edit/{team.TeamId}")>Edit</a> |
+                            <a href=@($"team/delete/{team.TeamId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {

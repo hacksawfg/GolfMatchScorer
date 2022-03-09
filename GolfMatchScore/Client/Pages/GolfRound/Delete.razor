@@ -12,22 +12,24 @@
 
 @if (round != null)
 {
-<h3>Delete Round Confirmation</h3>
-    <div class="container">
-        <div class="card-header d-flex justify-content-between">
-            <span>Round Date: @round.MatchDate.ToShortDateString()</span>
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">Confirm Round Delete</h3>
+        <div class="container">
+            <div class="card-header d-flex justify-content-between">
+                <span>Round Date: @round.MatchDate.ToShortDateString()</span>
+            </div>
+            <div class="card-body">
+                <p>Round Score: @round.MatchScore</p>
+                <p>Course: @round.Course.CourseName</p>
+                <p>Player: @round.Player.PlayerFirstName @round.Player.PlayerLastName</p>
+                <p>School: @round.Player.Team.TeamSchool</p>
+            </div>
         </div>
-        <div class="card-body">
-            <p>Round Score: @round.MatchScore</p>
-            <p>Course: @round.Course.CourseName</p>
-            <p>Player: @round.Player.PlayerFirstName @round.Player.PlayerLastName</p>
-            <p>School: @round.Player.Team.TeamSchool</p>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center mt-3">
-        <div class="text-center justify-content between w-50">
-            <a href=@($"/round/{roundId}") class="btn btn-outline-primary">Back to Round</a>
-            <a href=# @onclick="HandleClick" class="btn btn-danger text-white">Delete Round</a>
+        <div class="d-flex justify-content-center mt-3">
+            <div class="text-center justify-content between w-50">
+                <a href=@($"/round/{roundId}") class="btn btn-outline-primary">Back to Round</a>
+                <a href=# @onclick="HandleClick" class="btn btn-danger text-white">Delete Round</a>
+            </div>
         </div>
     </div>
 }

@@ -6,7 +6,6 @@
 @attribute [Authorize]
 @inject HttpClient http
 
-<h3>Round Information</h3>
 
 @if (round == null)
 {
@@ -15,8 +14,9 @@
 else
 {
     <div class="container">
-        <div class="card">
+        <div class="card mx-auto w-75">
             <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">Round Information</h3>
                 <span>Score for round at @round.Course.CourseName on @round.MatchDate.ToShortDateString()</span>
             </div>
             <div class="card-body">

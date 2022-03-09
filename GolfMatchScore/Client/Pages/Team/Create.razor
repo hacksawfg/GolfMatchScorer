@@ -4,7 +4,6 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
-<h3>Create a Team</h3>
 
 @if (errorMessage != null)
 {
@@ -12,20 +11,23 @@
 }
 
 <div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        
-        <div class="form-group">
-            <label>School Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamSchool" />
-            <label>Coach - First Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamCoachFirstName" />
-            <label>Coach - Last Name</label>
-            <InputText class="form-control" @bind-Value="model.TeamCoachLastName" />
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">Create a Team</h3>
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>School Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamSchool" />
+                <label>Coach - First Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamCoachFirstName" />
+                <label>Coach - Last Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamCoachLastName" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
 </div>
 
 @code {

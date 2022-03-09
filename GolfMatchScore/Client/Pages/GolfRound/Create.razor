@@ -6,7 +6,6 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
-<h3>Add a Round</h3>
 
 @if (errorMessage != null)
 {
@@ -14,52 +13,54 @@
 }
 
 <div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">Add a Round</h3>
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-        <div class="form-group">
-            <label>Match Date</label>
-            <InputDate class="form-control" @bind-Value="model.MatchDate" />
-            <label>Match Score</label>
-            <InputNumber class="form-control" @bind-Value="model.MatchScore" />
-            <label>Course</label>
-            <InputSelect class="form-control" @bind-Value="model.CourseId">
-                @if (courses == null)
-                {
-                    <p><em>Loading...</em></p>
-                }
-                else
-                {
-                    <option value="0">Select Course</option>
-                    @foreach (var course in courses)
+            <div class="form-group">
+                <label>Match Date</label>
+                <InputDate class="form-control" @bind-Value="model.MatchDate" />
+                <label>Match Score</label>
+                <InputNumber class="form-control" @bind-Value="model.MatchScore" />
+                <label>Course</label>
+                <InputSelect class="form-control" @bind-Value="model.CourseId">
+                    @if (courses == null)
                     {
-                        <option value="@course.CourseId">@course.CourseName</option>
+                        <p><em>Loading...</em></p>
                     }
-                }
-            </InputSelect>
-
-            <label>Player</label>
-            <InputSelect class="form-control" @bind-Value="model.PlayerId">
-                @if (players == null)
-                {
-                    <p><em>Loading...</em></p>
-                }
-                else
-                {
-                    <option value="0">Select Player</option>
-                    @foreach (var player in players)
+                    else
                     {
-                        <option value="@player.PlayerId">@player.PlayerFirstName @player.PlayerLastName</option>
+                        <option value="0">Select Course</option>
+                        @foreach (var course in courses)
+                        {
+                            <option value="@course.CourseId">@course.CourseName</option>
+                        }
                     }
-                }
-            </InputSelect>
+                </InputSelect>
 
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
+                <label>Player</label>
+                <InputSelect class="form-control" @bind-Value="model.PlayerId">
+                    @if (players == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        <option value="0">Select Player</option>
+                        @foreach (var player in players)
+                        {
+                            <option value="@player.PlayerId">@player.PlayerFirstName @player.PlayerLastName</option>
+                        }
+                    }
+                </InputSelect>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
 </div>
-
 @code {
     private RoundCreate model = new();
     private IEnumerable<PlayerListItem> players;

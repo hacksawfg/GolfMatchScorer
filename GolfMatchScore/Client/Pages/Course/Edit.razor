@@ -3,7 +3,6 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
-<h3>Edit Course</h3>
 
 @if (errorMessage != null)
 {
@@ -16,31 +15,34 @@
 }
 else
 {
-<div class="container">
-    <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="container">
+        <div class="card w-75 mx-auto p-4">
+            <h3 class="card-title">Edit Course</h3>
+            <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <div class="form-group">
-            <label>Course Name</label>
-            <InputText class="form-control" @bind-Value="model.CourseName" />
-            <label>City</label>
-            <InputText class="form-control" @bind-Value="model.CourseCity" />
-            <label>State</label>
-            <InputText class="form-control" @bind-Value="model.CourseState" />
-            <label>Par</label>
-            <InputNumber class="form-control" @bind-Value="model.CoursePar" />
-            <label>Length (yds)</label>
-            <InputNumber class="form-control" @bind-Value="model.CourseLength" />
-            <label>Difficulty Rating</label>
-            <InputNumber class="form-control" @bind-Value="model.CourseDifficultyRating" />
-            <label>Course Slope</label>
-            <InputNumber class="form-control" @bind-Value="model.CourseSlope" />
+                <div class="form-group">
+                    <label>Course Name</label>
+                    <InputText class="form-control" @bind-Value="model.CourseName" />
+                    <label>City</label>
+                    <InputText class="form-control" @bind-Value="model.CourseCity" />
+                    <label>State</label>
+                    <InputText class="form-control" @bind-Value="model.CourseState" />
+                    <label>Par</label>
+                    <InputNumber class="form-control" @bind-Value="model.CoursePar" />
+                    <label>Length (yds)</label>
+                    <InputNumber class="form-control" @bind-Value="model.CourseLength" />
+                    <label>Difficulty Rating</label>
+                    <InputNumber class="form-control" @bind-Value="model.CourseDifficultyRating" />
+                    <label>Course Slope</label>
+                    <InputNumber class="form-control" @bind-Value="model.CourseSlope" />
 
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+            </EditForm>
         </div>
-        <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
-    </EditForm>
-</div>
+    </div>
 }
 
 @code {
