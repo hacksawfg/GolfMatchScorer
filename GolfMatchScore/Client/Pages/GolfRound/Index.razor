@@ -1,0 +1,59 @@
+﻿@page "/round"
+@using GolfMatchScore.Shared.Models.GolfRound
+@using GolfMatchScore.Shared.Models.Player
+@using GolfMatchScore.Shared.Models.Course
+@inject HttpClient http
+@attribute [Authorize]
+
+
+@if (rounds == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="card mx-auto p-4 w-75">
+        <h3 class="card-title">List of Rounds</h3>
+        <a href="/round/create/">Create a Round</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Match Date</th>
+                    <th>Course</th>
+                    <th>Player</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (RoundListItem round in rounds)
+                {
+                    <tr>
+                        <td>@round.MatchDate.ToShortDateString()</td>
+                        <td value="@round.CourseId">@round.Course.CourseName</td>
+                        <td value="@round.PlayerId">@round.Player.PlayerFirstName @round.Player.PlayerLastName</td>
+                        <td>
+                            <a href=@($"round/{round.RoundId}")>Details</a> |
+                            <a href=@($"round/edit/{round.RoundId}")>Edit</a> |
+                            <a href=@($"round/delete/{round.RoundId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@code {
+    private List<RoundListItem> rounds;
+    private List<PlayerListItem> players;
+    private List<CourseListItem> courses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rounds = await http.GetFromJsonAsync<List<RoundListItem>>("api/golfround");
+        players = await http.GetFromJsonAsync<List<PlayerListItem>>("api/player");
+        courses = await http.GetFromJsonAsync<List<CourseListItem>>("api/course");
+
+    }
+}

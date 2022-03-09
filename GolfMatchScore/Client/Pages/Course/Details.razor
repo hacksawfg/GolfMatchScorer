@@ -1,0 +1,57 @@
+﻿@page "/course/{courseId:int}"
+@using GolfMatchScore.Shared.Models.Course
+@using GolfMatchScore.Shared.Models.GolfRound
+@attribute [Authorize]
+@inject HttpClient http
+
+
+@if (course == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="card w-75 mx-auto p-4">
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">@course.CourseName</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text mb-1">Par: @course.CoursePar</p>
+                <p class="card-text mb-1">Course Length (yds): @course.CourseLength</p>
+                <p class="card-text mb-1">Course Slope: @course.CourseSlope</p>
+                <p class="card-text mb-1">Course Rating: @course.CourseDifficultyRating</p>
+                <p class="card-text mb-1">List of Rounds</p>
+                <ul class="list-group list-group-flush">
+                    @foreach (var round in @course.Rounds)
+                    {
+                        <li class="list-group-item mb-1">@round.MatchDate.ToShortDateString()</li>
+                    }
+                </ul>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <span class="text-center">Location: @course.CourseCity, @course.CourseState</span>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <div class="text-center justify-content-between w-25">
+                    <a href=@($"/course/edit/{courseId}") class="btn btn-outline-primary">Edit</a>
+                    <a href=@($"/course/delete/{courseId}") class="btn btn-outline-danger">Delete</a>
+                    <hr />
+                    <a href="/course">Back to Course Index</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int courseId { get; set; }
+    public CourseDetail course { get; set; }
+    public RoundListItem round { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await http.GetFromJsonAsync<CourseDetail>($"/api/course/{courseId}");
+    }
+}

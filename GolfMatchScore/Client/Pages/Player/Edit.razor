@@ -1,0 +1,81 @@
+﻿@page "/player/edit/{playerId:int}"
+@using GolfMatchScore.Shared.Models.Player
+@using GolfMatchScore.Shared.Models.Team
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navigation
+
+
+@if (errorMessage != null)
+{
+    <h5 class="text-danger">@errorMessage</h5>
+}
+@if (model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="card w-50 p-4 mx-auto">
+            <h3 class="card-title">Edit Player Information</h3>
+
+            <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label>Player's First Name</label>
+                    <InputText class="form-control" @bind-Value="model.PlayerFirstName" />
+                    <label>Player's Last Name</label>
+                    <InputText class="form-control" @bind-Value="model.PlayerLastName" />
+                    <label>School</label>
+                    <InputSelect class="form-control" @bind-Value="model.TeamId">
+                        @if (teams == null)
+                        {
+                        <p><em>Loading...</em></p>
+                        }
+                        else
+                        {
+                        <option value="0">Select School</option>
+                        @foreach (var team in teams)
+                            {
+                            <option value="@team.TeamId">@team.TeamSchool</option>
+                            }
+                        }
+                </InputSelect>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter]
+    public int playerId { get; set; }
+    private PlayerEdit model { get; set; }
+    private IEnumerable<TeamListItem> teams;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        model = await http.GetFromJsonAsync<PlayerEdit>($"/api/player/{playerId}");
+        teams = await http.GetFromJsonAsync<IEnumerable<TeamListItem>>("/api/team/");
+    }
+
+    private async void HandleSubmit()
+    {
+        var editPlayer = await http.PutAsJsonAsync<PlayerEdit>($"/api/player/edit/{playerId}", model);
+
+        if (editPlayer.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/player");
+        }
+        else
+        {
+            errorMessage = "Could not edit the player right now.  Please try again later.";
+        }
+    }
+}
+

@@ -1,0 +1,50 @@
+﻿@page "/team/create"
+@using GolfMatchScore.Shared.Models.Team
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navigation
+
+
+@if (errorMessage != null)
+{
+    <h5 class="text-danger">@errorMessage</h5>
+}
+
+<div class="container">
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">Create a Team</h3>
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>School Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamSchool" />
+                <label>Coach - First Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamCoachFirstName" />
+                <label>Coach - Last Name</label>
+                <InputText class="form-control" @bind-Value="model.TeamCoachLastName" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private TeamCreate model = new();
+    private string errorMessage;
+
+    private async void HandleSubmit()
+    {
+        var createTeam = await http.PostAsJsonAsync<TeamCreate>("/api/team", model);
+
+        if (createTeam.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/team");
+        }
+        else
+        {
+            errorMessage = "Could not create a team right now.  Please try again later.";
+        }
+    }
+}

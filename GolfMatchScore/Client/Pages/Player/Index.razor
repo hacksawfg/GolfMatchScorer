@@ -1,0 +1,52 @@
+﻿@page "/player"
+@using GolfMatchScore.Shared.Models.Player
+@inject HttpClient http
+@attribute [Authorize]
+
+
+@if (players == null)
+{
+    <p style="color: white;"><em>Loading...</em></p>
+}
+else
+{
+    <div class="card mx-auto w-75 p-2">
+
+        <h3 class="card-title ml-2">List of Players</h3>
+
+        <a class="ml-2 text-decoration-none" href="/player/create/">Add a Player</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>School</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PlayerListItem player in players)
+                {
+                    <tr>
+                        <td>@player.PlayerFirstName @player.PlayerLastName</td>
+                        <td>@player.Team.TeamSchool</td>
+                        <td>
+                            <a href=@($"player/{player.PlayerId}")>Details</a> |
+                            <a href=@($"player/edit/{player.PlayerId}")>Edit</a> |
+                            <a href=@($"player/delete/{player.PlayerId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@code {
+    private List<PlayerListItem> players;
+
+    protected override async Task OnInitializedAsync()
+    {
+        players = await http.GetFromJsonAsync<List<PlayerListItem>>("api/player");
+    }
+}

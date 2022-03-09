@@ -1,0 +1,90 @@
+﻿@page "/round/create"
+@using GolfMatchScore.Shared.Models.Course
+@using GolfMatchScore.Shared.Models.GolfRound
+@using GolfMatchScore.Shared.Models.Player
+@attribute [Authorize]
+@inject HttpClient http
+@inject NavigationManager navigation
+
+
+@if (errorMessage != null)
+{
+    <h5 class="text-danger">@errorMessage</h5>
+}
+
+<div class="container">
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">Add a Round</h3>
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Match Date</label>
+                <InputDate class="form-control" @bind-Value="model.MatchDate" />
+                <label>Match Score</label>
+                <InputNumber class="form-control" @bind-Value="model.MatchScore" />
+                <label>Course</label>
+                <InputSelect class="form-control" @bind-Value="model.CourseId">
+                    @if (courses == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        <option value="0">Select Course</option>
+                        @foreach (var course in courses)
+                        {
+                            <option value="@course.CourseId">@course.CourseName</option>
+                        }
+                    }
+                </InputSelect>
+
+                <label>Player</label>
+                <InputSelect class="form-control" @bind-Value="model.PlayerId">
+                    @if (players == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        <option value="0">Select Player</option>
+                        @foreach (var player in players)
+                        {
+                            <option value="@player.PlayerId">@player.PlayerFirstName @player.PlayerLastName</option>
+                        }
+                    }
+                </InputSelect>
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+        </EditForm>
+    </div>
+</div>
+@code {
+    private RoundCreate model = new();
+    private IEnumerable<PlayerListItem> players;
+    private IEnumerable<CourseListItem> courses;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        players = await http.GetFromJsonAsync<List<PlayerListItem>>("api/player");
+        courses = await http.GetFromJsonAsync<List<CourseListItem>>("api/course");
+
+    }
+
+    private async void HandleSubmit()
+    {
+        var createRound = await http.PostAsJsonAsync<RoundCreate>("/api/golfround", model);
+
+        if (createRound.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/round");
+        }
+        else
+        {
+            errorMessage = "Could not create a round right now.  Please try again later.";
+        }
+    }
+}

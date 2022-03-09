@@ -1,0 +1,60 @@
+﻿@page "/round/edit/{roundId:int}"
+@using GolfMatchScore.Shared.Models.GolfRound
+@inject HttpClient http
+@inject NavigationManager navigation
+
+@if (errorMessage != null)
+{
+    <h5 class="text-danger">@errorMessage</h5>
+}
+
+@if (model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="card mx-auto w-50 p-4">
+            <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <h3 value="@model.RoundId">Edit Round for @model.Player.PlayerFirstName @model.Player.PlayerLastName</h3>
+                    <label>Round Date</label>
+                    <InputDate class="form-control" @bind-Value="model.MatchDate" />
+                    <label>Score for Round</label>
+                    <InputNumber class="form-control" @bind-Value="model.MatchScore" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Submit</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int roundId { get; set; }
+    private string errorMessage { get; set; }
+    private RoundEdit model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        model = await http.GetFromJsonAsync<RoundEdit>($"/api/golfround/{roundId}");
+    }
+
+    private async void HandleSubmit()
+    {
+        var editCourse = await http.PutAsJsonAsync<RoundEdit>($"/api/golfround/edit/{roundId}", model);
+
+        if (editCourse.IsSuccessStatusCode)
+        {
+            navigation.NavigateTo("/round");
+        }
+        else
+        {
+            errorMessage = "Could not edit the course right now.  Please try again later.";
+        }
+    }
+}

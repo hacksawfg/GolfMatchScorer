@@ -1,0 +1,51 @@
+﻿@page "/course"
+@using GolfMatchScore.Shared.Models.Course
+@inject HttpClient http
+@attribute [Authorize]
+
+
+
+@if (courses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="card mx-auto w-75 p-4">
+        <h3 class="card-title">List of Courses</h3>
+        <a href="/course/create/">Create a Course</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Location</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CourseListItem course in courses)
+                {
+                    <tr>
+                        <td>@course.CourseName</td>
+                        <td>@course.CourseCity, @course.CourseState</td>
+                        <td>
+                            <a href=@($"course/{course.CourseId}")>Details</a> |
+                            <a href=@($"course/edit/{course.CourseId}")>Edit</a> |
+                            <a href=@($"course/delete/{course.CourseId}")>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@code {
+    private List<CourseListItem> courses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await http.GetFromJsonAsync<List<CourseListItem>>("api/course");
+    }
+}

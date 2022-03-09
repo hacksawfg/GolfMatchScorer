@@ -113,6 +113,10 @@ namespace GolfMatchScore.Server.Data.Migrations
                     b.Property<string>("CourseState")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CourseId");
 
                     b.ToTable("Courses");
@@ -134,6 +138,10 @@ namespace GolfMatchScore.Server.Data.Migrations
                     b.Property<int>("MatchScore")
                         .HasColumnType("int");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
@@ -152,6 +160,10 @@ namespace GolfMatchScore.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlayerFirstName")
                         .IsRequired()
@@ -177,6 +189,9 @@ namespace GolfMatchScore.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeamCoachFirstName")
                         .IsRequired()
@@ -436,13 +451,13 @@ namespace GolfMatchScore.Server.Data.Migrations
             modelBuilder.Entity("GolfMatchScore.Server.Models.GolfRound", b =>
                 {
                     b.HasOne("GolfMatchScore.Server.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("Rounds")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GolfMatchScore.Server.Models.Player", "Player")
-                        .WithMany()
+                        .WithMany("Rounds")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -455,7 +470,7 @@ namespace GolfMatchScore.Server.Data.Migrations
             modelBuilder.Entity("GolfMatchScore.Server.Models.Player", b =>
                 {
                     b.HasOne("GolfMatchScore.Server.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("Players")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -512,6 +527,21 @@ namespace GolfMatchScore.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GolfMatchScore.Server.Models.Course", b =>
+                {
+                    b.Navigation("Rounds");
+                });
+
+            modelBuilder.Entity("GolfMatchScore.Server.Models.Player", b =>
+                {
+                    b.Navigation("Rounds");
+                });
+
+            modelBuilder.Entity("GolfMatchScore.Server.Models.Team", b =>
+                {
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }
