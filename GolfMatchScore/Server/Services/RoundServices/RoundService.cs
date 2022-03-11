@@ -81,6 +81,33 @@ namespace GolfMatchScore.Server.Services.RoundServices
                 }
             };
         }
+        // Future Method?
+/*        public async Task <IEnumerable<RoundDetails>> GetRoundsByDate(string dateFromCourseDetail, int courseId)
+        {
+            var roundQuery = await _context.GolfRounds
+                .Include(c => c.Course)
+                .Include(p => p.Player)
+                .ThenInclude(t => t.Team)
+                .Where(entity => entity.MatchDate.ToShortDateString() == dateFromCourseDetail && entity.CourseId == courseId)
+                .Select(n => new RoundDetails
+                {
+                    RoundId = n.RoundId,
+                    Player = new PlayerDetails
+                    {
+                        PlayerFirstName = n.Player.PlayerFirstName,
+                        PlayerLastName = n.Player.PlayerLastName,
+                        Team = new TeamListItem
+                        {
+                            TeamSchool = n.Player.Team.TeamSchool
+                        }
+                    },
+                    MatchScore = n.MatchScore,
+
+                }).ToListAsync();
+
+            return roundQuery;
+
+        }*/
 
         public async Task<IEnumerable<RoundListItem>> ListAllRoundsAsync()
         {

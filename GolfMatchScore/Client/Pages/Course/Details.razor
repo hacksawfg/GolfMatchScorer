@@ -1,6 +1,8 @@
 ﻿@page "/course/{courseId:int}"
 @using GolfMatchScore.Shared.Models.Course
 @using GolfMatchScore.Shared.Models.GolfRound
+@using GolfMatchScore.Shared.Models.Player
+@using GolfMatchScore.Shared.Models.Team
 @attribute [Authorize]
 @inject HttpClient http
 
@@ -23,9 +25,9 @@ else
                 <p class="card-text mb-1">Course Rating: @course.CourseDifficultyRating</p>
                 <p class="card-text mb-1">List of Rounds</p>
                 <ul class="list-group list-group-flush">
-                    @foreach (var round in @course.Rounds)
+                    @foreach (var match in @course.MatchDates)
                     {
-                        <li class="list-group-item mb-1">@round.MatchDate.ToShortDateString()</li>
+                        <li class="list-group-item mb-1">@match</li>
                     }
                 </ul>
             </div>
@@ -48,7 +50,6 @@ else
     [Parameter]
     public int courseId { get; set; }
     public CourseDetail course { get; set; }
-    public RoundListItem round { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

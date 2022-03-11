@@ -3,6 +3,7 @@ using GolfMatchScore.Server.Models;
 using GolfMatchScore.Shared.Models.Course;
 using GolfMatchScore.Shared.Models.GolfRound;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -103,8 +104,11 @@ namespace GolfMatchScore.Server.Services.CourseServices
                 {
                     RoundId = r.RoundId,
                     MatchDate = r.MatchDate
-                }).ToList()
+                }).ToList(),
+                MatchDates = courseQueryId.Rounds.Select(r => r.MatchDate.ToShortDateString()).Distinct().ToList()
             };
         }
+
+
     }
 }
